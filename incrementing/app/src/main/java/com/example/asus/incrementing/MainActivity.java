@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Locale;
+
+import static android.widget.Toast.LENGTH_LONG;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,15 +24,18 @@ public class MainActivity extends AppCompatActivity {
     public void increaseCount(View view) {
         messageEditText = (TextView) findViewById(R.id.messageEditText);
         int num = Integer.parseInt(messageEditText.getText().toString()) + 1;
-        System.out.println(num);
         String message = String.format(Locale.getDefault(), "%04d", num);
         messageEditText.setText(message);
     }
     public void decreaseCount(View view){
         messageEditText = (TextView) findViewById(R.id.messageEditText);
         int num = Integer.parseInt(messageEditText.getText().toString()) - 1;
-        System.out.println(num);
-        String message = String.format(Locale.getDefault(), "%04d", num);
-        messageEditText.setText(message);
+        if(num >= 0) {
+            String message = String.format(Locale.getDefault(), "%04d", num);
+            messageEditText.setText(message);
+        }
+        else {
+            Toast.makeText(getApplicationContext(), "Number cannot be negative", Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">incrementing</string>
+    <string name="_0000">0000</string>
+    <string name="increase_me">Increase me</string>
+    <string name="decrease_me">DECREASE ME</string>
+</resources>

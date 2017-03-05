@@ -14,8 +14,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main); // when activity main is created, open, analyze
-                                                // "inflate?"
+        setContentView(R.layout.activity_main); // when activity main is created
+
         nameEditText = (EditText) findViewById(R.id.nameEditText);
         messageEditText = (TextView) findViewById(R.id.messageEditText);
     }

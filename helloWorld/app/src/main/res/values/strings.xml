@@ -3,4 +3,5 @@
     <string name="nameEditText">Name</string>
     <string name="greatButtonText">great</string>
     <string name="greetingMessage">"Hello, %s"</string>
+    <string name="androidicon">androidIcon</string>
 </resources>

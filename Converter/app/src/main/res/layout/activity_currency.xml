@@ -6,50 +6,37 @@
     android:layout_height="match_parent"
     android:padding="15dp"
     android:orientation="vertical"
-    tools:context="com.gmail.amantaeva.begimai.CurrencyActivity">
+    tools:context=".CurrencyActivity">
 
-    <LinearLayout
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="6"
-            android:id="@+id/firstCurrencyEditText"
-            android:hint="@string/enter_first_number"
-            android:padding="15dp"/>
-        <Spinner
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/firstCurrencySpinner"
-            android:layout_weight="1">
-        </Spinner>
-
-    </LinearLayout>
+        android:id="@+id/firstCurrencyEditText"
+        android:hint="@string/enter_first_number"
+        android:padding="15dp"/>
 
 
-    <LinearLayout
+    <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:id="@+id/firstCurrencySpinner">
+    </Spinner>
 
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="6"
-            android:id="@+id/secondCurrencyEditText"
-            android:hint="@string/hintSecondnum"
-            android:padding="15dp"/>
-        <Spinner
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/secondCurrencySpinner"
-            android:layout_weight="1">
-        </Spinner>
 
-    </LinearLayout>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/secondCurrencyEditText"
+        android:hint="@string/hintSecondnum"
+        android:padding="15dp"/>
+
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/secondCurrencySpinner">
+    </Spinner>
+
 
     <EditText
         android:layout_width="match_parent"

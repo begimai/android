@@ -7,9 +7,16 @@
         <item>1000000.0</item>
         <item>1609344.0</item>
     </array>
+
     <array name="massConversionFactors">
         <item>1.0</item>
         <item>1000.0</item>
         <item>1000000.0</item>
+    </array>
+
+    <array name="currencies">
+        <item>US Dollars</item>
+        <item>Ruble</item>
+        <item>Euro</item>
     </array>
 </resources>

@@ -14,9 +14,4 @@
         <item>1000000.0</item>
     </array>
 
-    <array name="currencies">
-        <item>US Dollars</item>
-        <item>Ruble</item>
-        <item>Euro</item>
-    </array>
 </resources>

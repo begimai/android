@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Converter</string>
+    <string name="enter_first_number">Enter first number</string>
+    <string name="enter_second_number">Enter second number</string>
+    <string name="hintSecondnum">Enter second number</string>
+    <string name="hintForCustomRatio">Enter a custom ratio</string>
     <string-array name="lenghtUnits">
         <item>millimeter</item>
         <item>centimeter</item>

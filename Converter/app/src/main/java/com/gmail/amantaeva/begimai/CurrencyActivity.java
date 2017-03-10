@@ -28,8 +28,14 @@ public class CurrencyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_currency);
+
+        firstCurrencySpinner =(Spinner)findViewById(R.id.firstCurrencySpinner);
+        secondCurrencySpinner =(Spinner)findViewById(R.id.secondCurrencySpinner);
+        firstCurrencyEditText = (EditText)findViewById(R.id.firstCurrencyEditText);
+        secondCurrencyEditText = (EditText)findViewById(R.id.secondCurrencyEditText);
+        customConversionRatioEditText = (EditText)findViewById(R.id.customConversionRatioEditText);
 
     }
-
-    //json
+    
 }

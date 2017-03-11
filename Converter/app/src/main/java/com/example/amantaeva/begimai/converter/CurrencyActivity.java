@@ -53,9 +53,56 @@ public class CurrencyActivity extends AppCompatActivity {
         secondCurrencyEditText = (EditText)findViewById(R.id.secondCurrencyEditText);
         customConversionRatioEditText = (EditText)findViewById(R.id.customConversionRatioEditText);
 
+        loadConversionRatios();
         populateSpinner();
         setupListeners();
-        loadConversionRatios();
+    }
+
+    // this loads our json file, so we can use it
+    private void loadConversionRatios() {
+        InputStream inputStream = null;
+        File conversionRatiosFile;
+        if ((conversionRatiosFile = getFileStreamPath(CURRENCY_RATIOS_JSON)).exists()) {
+            try {
+                inputStream = new FileInputStream(conversionRatiosFile);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            inputStream = getResources().openRawResource(R.raw.currency_ratios);
+        }
+
+        String jsonFileContent = "";
+
+        if(inputStream != null) {
+            try {
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+                StringBuilder stringBuilder = new StringBuilder();
+
+                String line;
+                while((line = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(line);
+                }
+                jsonFileContent = stringBuilder.toString();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        try {
+            conversionRatios = new JSONObject(jsonFileContent);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            conversionRatios = new JSONObject();
+            setConversionRatioText(getConversionRatio());
+        }
     }
 
     // Adapters help to tell spinners how to show up, what to list inside
@@ -171,53 +218,6 @@ public class CurrencyActivity extends AppCompatActivity {
         );
     }
 
-    // this loads our json file, so we can use it
-    private void loadConversionRatios() {
-        InputStream inputStream = null;
-        File conversionRatiosFile;
-        if ((conversionRatiosFile = getFileStreamPath(CURRENCY_RATIOS_JSON)).exists()) {
-            try {
-                inputStream = new FileInputStream(conversionRatiosFile);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        } else {
-            inputStream = getResources().openRawResource(R.raw.currency_ratios);
-        }
-
-        String jsonFileContent = "";
-
-        if(inputStream != null) {
-            try {
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-                StringBuilder stringBuilder = new StringBuilder();
-
-                String line;
-                while((line = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(line);
-                }
-                jsonFileContent = stringBuilder.toString();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        try {
-            conversionRatios = new JSONObject(jsonFileContent);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            conversionRatios = new JSONObject();
-            setConversionRatioText(getConversionRatio());
-        }
-    }
-
     // fills a field with ratio that can be changed later by users
     private  void setConversionRatioText(double ratio) {
         customConversionRatioEditText.removeTextChangedListener(customConversionRatioEditTextTextWatcher);
@@ -225,4 +225,29 @@ public class CurrencyActivity extends AppCompatActivity {
         customConversionRatioEditText.addTextChangedListener(customConversionRatioEditTextTextWatcher);
     }
 
+    //built in function to store conversion ratios
+    @Override
+    protected void onStop() {
+        super.onStop();
+        saveConversionRatios();
+    }
+
+    private void saveConversionRatios() {
+        FileOutputStream fileOutputStream = null;
+        try {
+            fileOutputStream = openFileOutput(CURRENCY_RATIOS_JSON, Context.MODE_PRIVATE);
+            fileOutputStream.write(conversionRatios.toString().getBytes());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fileOutputStream != null) {
+                    fileOutputStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

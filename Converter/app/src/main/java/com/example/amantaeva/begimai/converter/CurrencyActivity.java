@@ -55,7 +55,7 @@ public class CurrencyActivity extends AppCompatActivity {
         setupListeners();
     }
 
-    
+
     private void populateSpinner() {
         ArrayAdapter<CharSequence> adapter =
                 ArrayAdapter.createFromResource(
@@ -71,6 +71,7 @@ public class CurrencyActivity extends AppCompatActivity {
 
     private  void setupListeners() {
         setupSpinnerListeners();
+        setupInputFieldsListeners();
 
     }
 
@@ -88,5 +89,49 @@ public class CurrencyActivity extends AppCompatActivity {
         firstCurrencySpinner.setOnItemSelectedListener(onItemSelectedListener);
         secondCurrencySpinner.setOnItemSelectedListener(onItemSelectedListener);
     }
+
+    private void setupInputFieldsListeners() {
+        firstCurrencyEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //have to do calculations
+            }
+        });
+
+        customConversionRatioEditTextTextWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                double value = 0.0;
+                try {
+                    value = Double.parseDouble(s.toString());
+                } catch (NumberFormatException ignored) {
+                    return;
+                }
+
+                String firstSelectedUnit = firstCurrencySpinner.getSelectedItem().toString();
+                String secondSelectedUnit = secondCurrencySpinner.getSelectedItem().toString();
+
+                String currencyPair = firstSelectedUnit + " - " + secondSelectedUnit;
+
+                try {
+                    conversionRatios.put(currencyPair, value);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        customConversionRatioEditText.addTextChangedListener(customConversionRatioEditTextTextWatcher);
+    }
+
 
 }

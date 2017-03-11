@@ -18,16 +18,18 @@ import java.util.Locale;
 
 public class ConverterActivity extends AppCompatActivity {
 
+    public static final String CONVERSION_RATIO_FACTORS = "CONVERSION_FACTORS";
+    public static final String CONVERSION_RATIO_UNITS = "CONVERSION_UNITS";
     private TextWatcher firstWatcher;
     private TextWatcher secondWatcher;
 
-    private EditText firstInput;
-    private EditText secondInput;
+    private EditText firstUnitEditText;
+    private EditText secondUnitEditText;
 
     private Spinner firstUnitSpinner;
     private Spinner secondUnitSpinner;
 
-    private TypedArray conversionForCalculate;
+    private TypedArray conversionRatioToCalculate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +55,11 @@ public class ConverterActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        int indexForSpinner = intent.getIntExtra("CONVERSION_FACTORS", -1);
-        conversionForCalculate = getResources().obtainTypedArray(indexForSpinner);
+        int indexForSpinner = intent.getIntExtra(CONVERSION_RATIO_FACTORS, -1);
+        conversionRatioToCalculate = getResources().obtainTypedArray(indexForSpinner);
 
-        float from = conversionForCalculate.getFloat(firstSelectedUnit, 0.0f);
-        float to = conversionForCalculate.getFloat(secondSelectedUnit, 0.0f);
+        float from = conversionRatioToCalculate.getFloat(firstSelectedUnit, 0.0f);
+        float to = conversionRatioToCalculate.getFloat(secondSelectedUnit, 0.0f);
 
 
         float result = value * from / to;
@@ -68,14 +70,14 @@ public class ConverterActivity extends AppCompatActivity {
     }
 
     private void initializeUIItems(){
-        firstInput = (EditText)findViewById(R.id.firstUnitEditText);
-        secondInput = (EditText)findViewById(R.id.secondUnitEditText);
+        firstUnitEditText = (EditText)findViewById(R.id.firstUnitEditText);
+        secondUnitEditText = (EditText)findViewById(R.id.secondUnitEditText);
 
         firstUnitSpinner = (Spinner)findViewById(R.id.firstUnitSpinner);
         secondUnitSpinner = (Spinner)findViewById(R.id.secondUnitSpinner);
 
         Intent intent = getIntent();
-        int indexForSpinner = intent.getIntExtra("CONVERSION_UNITS", -1);
+        int indexForSpinner = intent.getIntExtra(CONVERSION_RATIO_UNITS, -1);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this, indexForSpinner, android.R.layout.simple_spinner_item);
@@ -94,7 +96,7 @@ public class ConverterActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
-                doCalculation(firstInput, firstUnitSpinner, secondInput, secondUnitSpinner, secondWatcher);
+                doCalculation(firstUnitEditText, firstUnitSpinner, secondUnitEditText, secondUnitSpinner, secondWatcher);
             }
         };
 
@@ -105,12 +107,12 @@ public class ConverterActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
-                doCalculation(secondInput, secondUnitSpinner, firstInput, firstUnitSpinner, firstWatcher);
+                doCalculation(secondUnitEditText, secondUnitSpinner, firstUnitEditText, firstUnitSpinner, firstWatcher);
             }
         };
 
-        firstInput.addTextChangedListener(firstWatcher);
-        secondInput.addTextChangedListener(secondWatcher);
+        firstUnitEditText.addTextChangedListener(firstWatcher);
+        secondUnitEditText.addTextChangedListener(secondWatcher);
     }
 
     private  void setListeners(){
@@ -118,7 +120,7 @@ public class ConverterActivity extends AppCompatActivity {
                 new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        doCalculation(firstInput, firstUnitSpinner, secondInput, secondUnitSpinner, secondWatcher);
+                        doCalculation(firstUnitEditText, firstUnitSpinner, secondUnitEditText, secondUnitSpinner, secondWatcher);
                     }
 
                     @Override
@@ -130,7 +132,7 @@ public class ConverterActivity extends AppCompatActivity {
                 new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        doCalculation(secondInput, secondUnitSpinner, firstInput, firstUnitSpinner, firstWatcher);
+                        doCalculation(secondUnitEditText, secondUnitSpinner, firstUnitEditText, firstUnitSpinner, firstWatcher);
                     }
 
                     @Override

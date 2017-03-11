@@ -198,7 +198,6 @@ public class CurrencyActivity extends AppCompatActivity {
         String secondSelectedUnit = toSpinner.getSelectedItem().toString();
 
         String currencyPair = firstSelectedUnit + " - " + secondSelectedUnit;
-        Log.d("Success", currencyPair);
         return conversionRatios.optDouble(
                 currencyPair, 1.0f
         );

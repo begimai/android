@@ -18,7 +18,7 @@
     </string-array>
 
     <string-array name="currencies">
-        <item>US Dollars</item>
+        <item>US Dollar</item>
         <item>Ruble</item>
         <item>Euro</item>
     </string-array>

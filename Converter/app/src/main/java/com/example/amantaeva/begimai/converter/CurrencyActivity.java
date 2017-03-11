@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,6 +35,9 @@ public class CurrencyActivity extends AppCompatActivity {
     private EditText firstCurrencyEditText;
     private EditText secondCurrencyEditText;
     private EditText customConversionRatioEditText;
+
+    private TextWatcher firstEditTextWatcher;
+    private TextWatcher secondEditTextWatcher;
     private TextWatcher customConversionRatioEditTextTextWatcher;
 
     private Spinner firstCurrencySpinner;
@@ -53,9 +57,158 @@ public class CurrencyActivity extends AppCompatActivity {
         secondCurrencyEditText = (EditText)findViewById(R.id.secondCurrencyEditText);
         customConversionRatioEditText = (EditText)findViewById(R.id.customConversionRatioEditText);
 
-        loadConversionRatios();
         populateSpinner();
         setupListeners();
+        loadConversionRatios();
+    }
+
+    // Adapters help to tell spinners how to show up, what to list inside
+    private void populateSpinner() {
+        ArrayAdapter<CharSequence> adapter =
+                ArrayAdapter.createFromResource(
+                        this, R.array.currencies,
+                        android.R.layout.simple_spinner_item
+                );
+        adapter.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item
+        );
+        firstCurrencySpinner.setAdapter(adapter);
+        secondCurrencySpinner.setAdapter(adapter);
+    }
+
+    // Listeners are used to collect data that have been done
+    private  void setupListeners() {
+        setupSpinnerListeners();
+        setupConversionRatioEditTextListener();
+        initializeWatchers();
+    }
+
+    // spinner's item might change, so we have to recalculate
+    private void setupSpinnerListeners() {
+        AdapterView.OnItemSelectedListener onFirstItemSelectedListener =
+                new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        calculate(firstCurrencyEditText, firstCurrencySpinner, secondCurrencyEditText, secondCurrencySpinner, secondEditTextWatcher);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) { }
+                };
+        AdapterView.OnItemSelectedListener onSecondItemSelectedListener =
+                new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        calculate(secondCurrencyEditText, secondCurrencySpinner, firstCurrencyEditText, firstCurrencySpinner, firstEditTextWatcher);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) { }
+                };
+        firstCurrencySpinner.setOnItemSelectedListener(onFirstItemSelectedListener);
+        secondCurrencySpinner.setOnItemSelectedListener(onSecondItemSelectedListener);
+    }
+
+    // gets entered numbers from EditText and CustomRatio field
+    private void setupConversionRatioEditTextListener() {
+        customConversionRatioEditTextTextWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                double value = 0.0;
+                try {
+                    value = Double.parseDouble(s.toString());
+                } catch (NumberFormatException ignored) {
+                    return;
+                }
+
+                String firstSelectedUnit = firstCurrencySpinner.getSelectedItem().toString();
+                String secondSelectedUnit = secondCurrencySpinner.getSelectedItem().toString();
+
+                String currencyPair = firstSelectedUnit + " - " + secondSelectedUnit;
+
+                try {
+                    conversionRatios.put(currencyPair, value);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        customConversionRatioEditText.addTextChangedListener(customConversionRatioEditTextTextWatcher);
+    }
+
+    private  void initializeWatchers(){
+        firstEditTextWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                calculate(firstCurrencyEditText, firstCurrencySpinner, secondCurrencyEditText, secondCurrencySpinner, secondEditTextWatcher);
+            }
+        };
+
+        secondEditTextWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                calculate(secondCurrencyEditText, secondCurrencySpinner, firstCurrencyEditText, firstCurrencySpinner, firstEditTextWatcher);
+            }
+        };
+
+        firstCurrencyEditText.addTextChangedListener(firstEditTextWatcher);
+        secondCurrencyEditText.addTextChangedListener(secondEditTextWatcher);
+    }
+
+
+    // is calculate or recalculate values
+    private  void calculate(EditText fromEditText, Spinner fromSpinner,
+                            EditText toEditText, Spinner toSpinner, TextWatcher toWatcher) {
+        double value;
+        try {
+            value = Double.parseDouble(fromEditText.getText().toString());
+        } catch (NumberFormatException ignored) {
+            return;
+        }
+
+        double ratio = getConversionRatio(fromSpinner, toSpinner);
+        double result = value * ratio;
+
+        toEditText.removeTextChangedListener(toWatcher);
+        toEditText.setText(
+                String.format(
+                        Locale.getDefault(), "%.2f", result
+                )
+        );
+        toEditText.addTextChangedListener(toWatcher);
+    }
+
+    // gets a ratio from json for a specific currencies
+    private double getConversionRatio(Spinner fromSpinner, Spinner toSpinner) {
+        String firstSelectedUnit = fromSpinner.getSelectedItem().toString();
+
+        String secondSelectedUnit = toSpinner.getSelectedItem().toString();
+
+        String currencyPair = firstSelectedUnit + " - " + secondSelectedUnit;
+        Log.d("Success", currencyPair);
+        return conversionRatios.optDouble(
+                currencyPair, 1.0f
+        );
+    }
+
+    // fills a field with ratio that can be changed later by users
+    private  void setConversionRatioText(double ratio) {
+        customConversionRatioEditText.removeTextChangedListener(customConversionRatioEditTextTextWatcher);
+        customConversionRatioEditText.setText(String.valueOf(ratio));
+        customConversionRatioEditText.addTextChangedListener(customConversionRatioEditTextTextWatcher);
     }
 
     // this loads our json file, so we can use it
@@ -101,128 +254,8 @@ public class CurrencyActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
             conversionRatios = new JSONObject();
-            setConversionRatioText(getConversionRatio());
+            setConversionRatioText(getConversionRatio(firstCurrencySpinner, secondCurrencySpinner));
         }
-    }
-
-    // Adapters help to tell spinners how to show up, what to list inside
-    private void populateSpinner() {
-        ArrayAdapter<CharSequence> adapter =
-                ArrayAdapter.createFromResource(
-                        this, R.array.currencies,
-                        android.R.layout.simple_spinner_item
-                );
-        adapter.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item
-        );
-        firstCurrencySpinner.setAdapter(adapter);
-        secondCurrencySpinner.setAdapter(adapter);
-    }
-
-    // Listeners are used to collect data that have been done
-    private  void setupListeners() {
-        setupSpinnerListeners();
-        setupInputFieldsListeners();
-
-    }
-
-    // spinner's item might change, so we have to recalculate
-    private void setupSpinnerListeners() {
-        AdapterView.OnItemSelectedListener onItemSelectedListener =
-                new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        calculate();
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) { }
-                };
-        firstCurrencySpinner.setOnItemSelectedListener(onItemSelectedListener);
-        secondCurrencySpinner.setOnItemSelectedListener(onItemSelectedListener);
-    }
-
-    // gets entered numbers from EditText and CustomRatio field
-    private void setupInputFieldsListeners() {
-        firstCurrencyEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                calculate();
-            }
-        });
-
-        customConversionRatioEditTextTextWatcher = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                double value = 0.0;
-                try {
-                    value = Double.parseDouble(s.toString());
-                } catch (NumberFormatException ignored) {
-                    return;
-                }
-
-                String firstSelectedUnit = firstCurrencySpinner.getSelectedItem().toString();
-                String secondSelectedUnit = secondCurrencySpinner.getSelectedItem().toString();
-
-                String currencyPair = firstSelectedUnit + " - " + secondSelectedUnit;
-
-                try {
-                    conversionRatios.put(currencyPair, value);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        customConversionRatioEditText.addTextChangedListener(customConversionRatioEditTextTextWatcher);
-    }
-
-    // is calculate or recalculate values
-    private  void calculate() {
-        double value;
-        try {
-            value = Double.parseDouble(firstCurrencyEditText.getText().toString());
-        } catch (NumberFormatException ignored) {
-            return;
-        }
-
-        double ratio = getConversionRatio();
-        double result = value * ratio;
-
-        secondCurrencyEditText.setText(
-                String.format(
-                        Locale.getDefault(), "%.2f", result
-                )
-        );
-    }
-
-    // gets a ratio from json for a specific currencies
-    private double getConversionRatio() {
-        String firstSelectedUnit = firstCurrencySpinner.getSelectedItem().toString();
-
-        String secondSelectedUnit = secondCurrencySpinner.getSelectedItem().toString();
-
-        String currencyPair = firstSelectedUnit + " - " + secondSelectedUnit;
-
-        return conversionRatios.optDouble(
-                currencyPair, 1.0f
-        );
-    }
-
-    // fills a field with ratio that can be changed later by users
-    private  void setConversionRatioText(double ratio) {
-        customConversionRatioEditText.removeTextChangedListener(customConversionRatioEditTextTextWatcher);
-        customConversionRatioEditText.setText(String.valueOf(ratio));
-        customConversionRatioEditText.addTextChangedListener(customConversionRatioEditTextTextWatcher);
     }
 
     //built in function to store conversion ratios

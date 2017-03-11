@@ -39,7 +39,7 @@ public class ConverterActivity extends AppCompatActivity {
         setListeners();
     }
 
-    private void calculate(EditText fromEditText, Spinner fromSpinner,
+    private void doCalculation(EditText fromEditText, Spinner fromSpinner,
                            EditText toEditText, Spinner toSpinner, TextWatcher toWatcher) {
         float value = 0.0f;
         try {
@@ -94,7 +94,7 @@ public class ConverterActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
-                calculate(firstInput, firstUnitSpinner, secondInput, secondUnitSpinner, secondWatcher);
+                doCalculation(firstInput, firstUnitSpinner, secondInput, secondUnitSpinner, secondWatcher);
             }
         };
 
@@ -105,7 +105,7 @@ public class ConverterActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
-                calculate(secondInput, secondUnitSpinner, firstInput, firstUnitSpinner, firstWatcher);
+                doCalculation(secondInput, secondUnitSpinner, firstInput, firstUnitSpinner, firstWatcher);
             }
         };
 
@@ -118,7 +118,7 @@ public class ConverterActivity extends AppCompatActivity {
                 new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        calculate(firstInput, firstUnitSpinner, secondInput, secondUnitSpinner, secondWatcher);
+                        doCalculation(firstInput, firstUnitSpinner, secondInput, secondUnitSpinner, secondWatcher);
                     }
 
                     @Override
@@ -130,7 +130,7 @@ public class ConverterActivity extends AppCompatActivity {
                 new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        calculate(secondInput, secondUnitSpinner, firstInput, firstUnitSpinner, firstWatcher);
+                        doCalculation(secondInput, secondUnitSpinner, firstInput, firstUnitSpinner, firstWatcher);
                     }
 
                     @Override

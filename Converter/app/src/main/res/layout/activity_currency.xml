@@ -28,6 +28,15 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/firstCustomConversionRatioEditText"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:hint="@string/hintForFirstCustomRatio"
+        android:padding="15dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/secondCurrencyEditText"
         android:inputType="numberDecimal"
         android:ems="10"
@@ -45,9 +54,9 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/customConversionRatioEditText"
+        android:id="@+id/secondCustomConversionRatioEditText"
         android:inputType="numberDecimal"
         android:ems="10"
-        android:hint="@string/hintForCustomRatio"
+        android:hint="@string/hintForSecondCustomRatio"
         android:padding="15dp"/>
 </LinearLayout>

@@ -8,6 +8,13 @@
     android:orientation="vertical"
     tools:context=".CurrencyActivity">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:text="@string/first_input"/>
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,8 +22,9 @@
         android:inputType="numberDecimal"
         android:ems="10"
         android:hint="@string/enter_first_number"
-        android:padding="15dp"/>
-
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"/>
 
     <Spinner
         android:layout_width="match_parent"
@@ -24,6 +32,11 @@
         android:id="@+id/firstCurrencySpinner">
     </Spinner>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/ratio_from_second_num_to_first"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -32,7 +45,18 @@
         android:inputType="numberDecimal"
         android:ems="10"
         android:hint="@string/hintForFirstCustomRatio"
-        android:padding="15dp"/>
+        android:paddingTop="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="35dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="15dp"
+        android:text="@string/second_input"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -41,8 +65,10 @@
         android:inputType="numberDecimal"
         android:ems="10"
         android:hint="@string/enter_second_number"
-        android:padding="15dp"/>
-
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="5dp"/>
 
     <Spinner
         android:layout_width="match_parent"
@@ -50,7 +76,11 @@
         android:id="@+id/secondCurrencySpinner">
     </Spinner>
 
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:text="@string/ratio_from_second_num_to_first"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,4 +89,5 @@
         android:ems="10"
         android:hint="@string/hintForSecondCustomRatio"
         android:padding="15dp"/>
+
 </LinearLayout>

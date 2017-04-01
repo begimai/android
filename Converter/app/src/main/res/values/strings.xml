@@ -5,8 +5,8 @@
     <string name="hintForFirstCustomRatio">Enter first custom ratio</string>
     <string name="hintForSecondCustomRatio">Enter first custom ratio</string>
     <string name="ratio_from_second_num_to_first">Ratio from second num to first</string>
-    <string name="first_input">first input</string>
-    <string name="second_input">second input</string>
+    <string name="first_input">FIRST INPUT</string>
+    <string name="second_input">SECOND INPUT</string>
     <string-array name="lenghtUnits">
         <item>millimeter</item>
         <item>centimeter</item>

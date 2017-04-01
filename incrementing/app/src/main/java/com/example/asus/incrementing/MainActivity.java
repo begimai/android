@@ -19,16 +19,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main); // when activity main is created, open, analyze
-
+        messageEditText = (TextView) findViewById(R.id.messageEditText);
     }
     public void increaseCount(View view) {
-        messageEditText = (TextView) findViewById(R.id.messageEditText);
         int num = Integer.parseInt(messageEditText.getText().toString()) + 1;
         String message = String.format(Locale.getDefault(), "%04d", num);
         messageEditText.setText(message);
     }
     public void decreaseCount(View view){
-        messageEditText = (TextView) findViewById(R.id.messageEditText);
         int num = Integer.parseInt(messageEditText.getText().toString()) - 1;
         if(num >= 0) {
             String message = String.format(Locale.getDefault(), "%04d", num);

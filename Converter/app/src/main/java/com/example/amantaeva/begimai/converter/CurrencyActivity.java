@@ -1,6 +1,7 @@
 package com.example.amantaeva.begimai.converter;
 
 import android.content.Context;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -30,6 +31,12 @@ import java.util.Locale;
 public class CurrencyActivity extends AppCompatActivity {
 
     public static final String CURRENCY_RATIOS_JSON = "currency_ratios.json";
+    public static final String first_Currency_EditText = "firstCurrencyEditText";
+    public static final String second_Currency_EditText = "secondCurrencyEditText";
+    public static final String first_Custom_Conversion_Ratio_EditText = "firstCustomConversionRatioEditText";
+    public static final String second_Custom_Conversion_Ratio_EditText = "secondCustomConversionRatioEditText";
+
+
 
     // declaration of EditTexts, Spinners, TextWatcher and JsonObject
     private EditText firstCurrencyEditText;
@@ -66,6 +73,22 @@ public class CurrencyActivity extends AppCompatActivity {
         populateSpinner();
         setupListeners();
         loadConversionRatios();
+
+        if(savedInstanceState != null) {
+            firstCurrencyEditText.setText(
+                    String.valueOf(savedInstanceState.getDouble(first_Currency_EditText))
+            );
+            Log.d("Success 1", String.valueOf(savedInstanceState.getDouble(first_Currency_EditText)));
+            secondCurrencyEditText.setText(
+                    String.valueOf(savedInstanceState.getDouble(second_Currency_EditText))
+            );
+            firstCustomConversionRatioEditText.setText(
+                    String.valueOf(savedInstanceState.getDouble(first_Custom_Conversion_Ratio_EditText))
+            );
+            secondCustomConversionRatioEditText.setText(
+                    String.valueOf(savedInstanceState.getDouble(second_Custom_Conversion_Ratio_EditText))
+            );
+        }
     }
 
     // Adapters help to tell spinners how to show up, what to list inside
@@ -301,6 +324,16 @@ public class CurrencyActivity extends AppCompatActivity {
         conversionRatioEditText.removeTextChangedListener(conversionRatioTextWatcher);
         conversionRatioEditText.setText(String.valueOf(ratio));
         conversionRatioEditText.addTextChangedListener(conversionRatioTextWatcher);
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        bundle.putDouble(first_Currency_EditText, Double.parseDouble(firstCurrencyEditText.getText().toString()));
+        bundle.putDouble(second_Currency_EditText, Double.parseDouble(secondCurrencyEditText.getText().toString()));
+        bundle.putDouble(first_Custom_Conversion_Ratio_EditText, Double.parseDouble(firstCustomConversionRatioEditText.getText().toString()));
+        bundle.putDouble(second_Custom_Conversion_Ratio_EditText, Double.parseDouble(secondCustomConversionRatioEditText.getText().toString()));
     }
 
     //built in function to store conversion ratios

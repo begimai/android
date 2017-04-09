@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="12dp"
-    android:orientation="vertical"
-    android:weightSum="1">
+    android:orientation="vertical">
 
     <HorizontalScrollView
         android:layout_width="match_parent"
@@ -19,29 +18,33 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:text="Usual Map"
-                android:id="@+id/usualMapID"/>
+                android:text="@string/normalMapBtnText"
+                android:id="@+id/normalMapID"
+                android:onClick="onClick"/>
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:text="Satellite Map"
-                android:id="@+id/satelliteMapID"/>
+                android:text="@string/satelliteMapBtnText"
+                android:id="@+id/satelliteMapID"
+                android:onClick="onClick"/>
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:text="Marker"
-                android:id="@+id/markerID"/>
+                android:text="@string/markerBtnText"
+                android:id="@+id/markerID"
+                android:onClick="onClick"/>
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:text="GPS"
-                android:id="@+id/gpsID"/>
+                android:text="@string/gpsBtnText"
+                android:id="@+id/gpsID"
+                android:onClick="onClick"/>
 
         </LinearLayout>
     </HorizontalScrollView>

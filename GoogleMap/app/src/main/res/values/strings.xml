@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Google Map</string>
     <string name="title_activity_maps">Map</string>
+    <string name="normalMapBtnText">Normal Map</string>
+    <string name="satelliteMapBtnText">Satellite Map</string>
+    <string name="markerBtnText">Marker</string>
+    <string name="gpsBtnText">GPS</string>
 </resources>

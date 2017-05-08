@@ -8,23 +8,40 @@
     tools:context="amantaeva.begimai.calculator.MainActivity">
 
     <EditText
-        android:id="@+id/resultEditText"
+        android:id="@+id/inputEditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:gravity="end"
         android:cursorVisible="false"
         android:focusable="false"
         android:inputType="none"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginLeft="12dp"
+        android:text="0"
+        android:textSize="18sp"
+        android:textColor="@color/lightgray"
+        android:background="@android:color/transparent"/>
+
+    <EditText
+        android:id="@+id/resultEditText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:gravity="end"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:inputType="none"
         android:layout_marginRight="12dp"
         android:layout_marginLeft="12dp"
         android:text="@string/initialEditTextValue"
-        android:textSize="64sp"
+        android:textSize="62sp"
         android:textColor="@color/fuchsia"/>
 
     <TableRow
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center">
 
@@ -32,36 +49,40 @@
             android:id="@+id/clearButton"
             style="@style/OperationButton"
             android:text="@string/clearBtnText"
-            android:textSize="36sp"
-            android:background="@color/purplish"/>
+            android:textSize="32sp"
+            android:background="@color/purplish"
+            android:onClick="onClearButtonClick"/>
 
         <Button
             android:id="@+id/changeSignButton"
             style="@style/OperationButton"
             android:text="@string/changeSignBtnText"
-            android:textSize="36sp"
-            android:background="@color/purplish"/>
+            android:textSize="32sp"
+            android:background="@color/purplish"
+            android:onClick="onNegateButtonClick"/>
 
         <Button
             android:id="@+id/moduloButton"
             style="@style/OperationButton"
             android:text="@string/moduloBtnText"
-            android:textSize="36sp"
+            android:textSize="32sp"
             android:background="@color/purplish"
-            android:tag="REMAINDER"/>
+            android:tag="REMAINDER"
+            android:onClick="onBinaryOperationButtonClick"/>
 
         <Button
             android:id="@+id/divideButton"
             style="@style/OperationButton"
             android:text="@string/divisionBtnText"
-            android:textSize="36sp"
+            android:textSize="32sp"
             android:background="@color/purplish"
-            android:tag="DIVISION"/>
+            android:tag="DIVISION"
+            android:onClick="onBinaryOperationButtonClick"/>
     </TableRow>
 
     <TableRow
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center">
 
@@ -69,35 +90,39 @@
             android:id="@+id/sevenButton"
             style="@style/CalculatorButton"
             android:text="@string/sevenBtnText"
-            android:textSize="36sp"
-            android:background="@color/fuchsia"/>
+            android:textSize="32sp"
+            android:background="@color/fuchsia"
+            android:onClick="onAddDigitButtonClick"/>
 
         <Button
             android:id="@+id/eightButton"
             style="@style/CalculatorButton"
             android:text="@string/eightBtnText"
-            android:textSize="36sp"
-            android:background="@color/fuchsia"/>
+            android:textSize="32sp"
+            android:background="@color/fuchsia"
+            android:onClick="onAddDigitButtonClick"/>
 
         <Button
             android:id="@+id/nineButton"
             style="@style/CalculatorButton"
             android:text="@string/nineBtnText"
-            android:textSize="36sp"
-            android:background="@color/fuchsia"/>
+            android:textSize="32sp"
+            android:background="@color/fuchsia"
+            android:onClick="onAddDigitButtonClick"/>
 
         <Button
             android:id="@+id/multiplyButton"
             style="@style/OperationButton"
             android:text="@string/multiplicationBtnText"
-            android:textSize="36sp"
+            android:textSize="32sp"
             android:background="@color/purplish"
-            android:tag="MULTIPLICATION"/>
+            android:tag="MULTIPLICATION"
+            android:onClick="onBinaryOperationButtonClick"/>
     </TableRow>
 
     <TableRow
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center">
 
@@ -105,35 +130,39 @@
             android:id="@+id/fourButton"
             style="@style/CalculatorButton"
             android:text="@string/fourBtnText"
-            android:textSize="36sp"
-            android:background="@color/fuchsia"/>
+            android:textSize="32sp"
+            android:background="@color/fuchsia"
+            android:onClick="onAddDigitButtonClick"/>
 
         <Button
             android:id="@+id/fiveButton"
             style="@style/CalculatorButton"
             android:text="@string/fiveBtnText"
-            android:textSize="36sp"
-            android:background="@color/fuchsia" />
+            android:textSize="32sp"
+            android:background="@color/fuchsia"
+            android:onClick="onAddDigitButtonClick"/>
 
         <Button
             android:id="@+id/sixButton"
             style="@style/CalculatorButton"
             android:text="@string/sixBtnText"
-            android:textSize="36sp"
-            android:background="@color/fuchsia"/>
+            android:textSize="32sp"
+            android:background="@color/fuchsia"
+            android:onClick="onAddDigitButtonClick"/>
 
         <Button
             android:id="@+id/addButton"
             style="@style/OperationButton"
             android:text="@string/additionBtnText"
-            android:textSize="36sp"
+            android:textSize="32sp"
             android:background="@color/purplish"
-            android:tag="ADDITION"/>
+            android:tag="ADDITION"
+            android:onClick="onBinaryOperationButtonClick"/>
     </TableRow>
 
     <TableRow
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center">
 
@@ -141,35 +170,39 @@
             android:id="@+id/oneButton"
             style="@style/CalculatorButton"
             android:text="@string/oneBtnText"
-            android:textSize="36sp"
-            android:background="@color/fuchsia"/>
+            android:textSize="32sp"
+            android:background="@color/fuchsia"
+            android:onClick="onAddDigitButtonClick"/>
 
         <Button
             android:id="@+id/twoButton"
             style="@style/CalculatorButton"
             android:text="@string/twoBtnText"
-            android:textSize="36sp"
-            android:background="@color/fuchsia"/>
+            android:textSize="32sp"
+            android:background="@color/fuchsia"
+            android:onClick="onAddDigitButtonClick"/>
 
         <Button
             android:id="@+id/threeButton"
             style="@style/CalculatorButton"
             android:text="@string/threeBtnText"
-            android:textSize="36sp"
-            android:background="@color/fuchsia"/>
+            android:textSize="32sp"
+            android:background="@color/fuchsia"
+            android:onClick="onAddDigitButtonClick"/>
 
         <Button
             android:id="@+id/subtractButton"
             style="@style/OperationButton"
             android:text="@string/subtractionBtnText"
-            android:textSize="36sp"
+            android:textSize="32sp"
             android:background="@color/purplish"
-            android:tag="SUBTRACTION"/>
+            android:tag="SUBTRACTION"
+            android:onClick="onBinaryOperationButtonClick"/>
     </TableRow>
 
     <TableRow
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center">
 
@@ -177,23 +210,25 @@
             android:id="@+id/zeroButton"
             style="@style/CalculatorButton"
             android:text="@string/zeroBtnText"
-            android:textSize="36sp"
+            android:textSize="32sp"
             android:background="@color/fuchsia"
-            android:layout_weight="2"/>
+            android:layout_weight="2"
+            android:onClick="onAddDigitButtonClick"/>
 
         <Button
             android:id="@+id/decimalPointButton"
             style="@style/CalculatorButton"
             android:text="@string/decimalPointBtnText"
-            android:textSize="36sp"
+            android:textSize="32sp"
             android:background="@color/fuchsia"/>
 
         <Button
             android:id="@+id/resultButton"
             style="@style/OperationButton"
             android:text="@string/resultBtnText"
-            android:textSize="36sp"
-            android:background="@color/purplish"/>
+            android:textSize="32sp"
+            android:background="@color/purplish"
+            android:onClick="onResultButtonClick"/>
     </TableRow>
 
 </TableLayout>

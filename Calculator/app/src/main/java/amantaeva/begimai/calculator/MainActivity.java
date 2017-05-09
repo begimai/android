@@ -11,6 +11,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     private EditText resultEditText;
+    private EditText inputEditText;
 
     private Calculator calculator;
 
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         resultEditText = (EditText) findViewById(R.id.resultEditText);
+        inputEditText = (EditText) findViewById(R.id.inputEditText);
         calculator = new Calculator();
     }
 
@@ -39,11 +41,10 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             calculator.performBinaryOperation(operation);
-        } catch (ArithmeticException e) {
+        } catch (Exception e) {
             Log.d("Main Activity", e.getMessage());
             reportError();
         }
-
         displayResult();
     }
 

@@ -57,7 +57,6 @@ public class Calculator {
         if (operands.size() == 1 && operator != Operation.NONE) {
             operands.push(new BigDecimal(String.valueOf(digit)));
         } else {
-
             BigDecimal value = operands.pop();
 
             if (value.compareTo(BigDecimal.ZERO) < 0) {
@@ -82,8 +81,8 @@ public class Calculator {
             try {
                 operands.push(firstOperand.divideAndRemainder(secondOperand)[1]);
             } catch (ArithmeticException e) {
+                clear();
                 operands.push(BigDecimal.ZERO);
-
                 throw e;
             }
             operator = Operation.NONE;
@@ -99,8 +98,9 @@ public class Calculator {
 
             try {
                 operands.push(firstOperand.divide(secondOperand));
-            } catch (ArithmeticException e) {
-                operands.push(BigDecimal.ZERO)
+            } catch (Exception e) {
+                clear();
+                operands.push(BigDecimal.ZERO);
                 throw e;
             }
             operator = Operation.NONE;
